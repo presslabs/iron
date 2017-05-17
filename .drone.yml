@@ -1,15 +1,12 @@
-build:
-  iron:
+pipeline:
+  test:
     image: python:3.5
     pull: true
     environment:
       - DJANGO_SETTINGS_MODULE=django_project.settings.test
-      - XDG_CACHE_HOME=/drone/.cache/pip
     commands:
       - pip install -U -r requirements.dev.txt
       - make lint
       - make full-test
-
-cache:
-  mount:
-    - /drone/.cache
+    volumes:
+      - '/var/lib/drone/cache/pip:/root/.cache/pip'
